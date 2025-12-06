@@ -1,0 +1,247 @@
+/* assets/css/player.css - Music Player Styles */
+
+.player {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* Player Info Section */
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.player-cover {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: linear-gradient(135deg, var(--purple-600), var(--pink-400));
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.player-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-artist {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-info .favorite-btn {
+    margin-left: 0.5rem;
+}
+
+/* Player Controls Section */
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    max-width: 40rem;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.control-buttons button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-buttons button:hover {
+    color: var(--purple-600);
+}
+
+.control-buttons button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.play-btn {
+    background: white !important;
+    color: black !important;
+    padding: 0.75rem !important;
+    width: 3rem;
+    height: 3rem;
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background: white !important;
+    color: black !important;
+}
+
+.play-btn svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+/* Progress Bar */
+.progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.time-current,
+.time-total {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    min-width: 2.5rem;
+}
+
+.progress {
+    flex: 1;
+    height: 0.5rem;
+    background: var(--gray-700);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress:hover {
+    height: 0.625rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--purple-600);
+    border-radius: 0.25rem;
+    width: 0%;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+.progress:hover .progress-fill {
+    background: var(--purple-700);
+}
+
+/* Volume Section */
+.player-volume {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.player-volume svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.volume-bar {
+    width: 6rem;
+    height: 0.5rem;
+    background: var(--gray-700);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.volume-bar:hover {
+    height: 0.625rem;
+}
+
+.volume-fill {
+    height: 100%;
+    background: white;
+    border-radius: 0.25rem;
+    width: 66%;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+.volume-bar:hover .volume-fill {
+    background: var(--purple-600);
+}
+
+/* Responsive Player */
+@media (max-width: 1024px) {
+    .player {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .player-info {
+        flex: 1 1 100%;
+    }
+    
+    .player-controls {
+        flex: 1 1 100%;
+    }
+    
+    .player-volume {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .player {
+        padding: 1rem;
+    }
+    
+    .player-cover {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+    
+    .control-buttons button svg {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    .play-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

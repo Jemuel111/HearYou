@@ -1,0 +1,30 @@
+{
+    "name": "hearyou/music-streaming",
+    "description": "HearYou - Emotion-based music streaming platform with AI recommendations",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "your.email@example.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "HearYou\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"copy('.env.example', '.env');\""
+        ]
+    }
+}
