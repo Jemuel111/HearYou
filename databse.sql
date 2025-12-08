@@ -103,18 +103,3 @@ CREATE TABLE IF NOT EXISTS chat_history (
     INDEX idx_user_id (user_id),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Insert Sample Songs
-INSERT INTO songs (title, artist, emotion, cover, duration, file_path) VALUES
-('Midnight Rain', 'Luna Echo', 'sad', '🌧️', '3:45', 'songs/midnight_rain.mp3'),
-('Summer Vibes', 'DJ Sunshine', 'happy', '☀️', '3:20', 'songs/summer_vibes.mp3'),
-('Deep Thoughts', 'Mind Wave', 'calm', '🌊', '4:12', 'songs/deep_thoughts.mp3'),
-('Energy Burst', 'Power Pulse', 'energetic', '⚡', '2:58', 'songs/energy_burst.mp3'),
-('Lonely Nights', 'Soul Singer', 'sad', '🌙', '4:30', 'songs/lonely_nights.mp3'),
-('Party Time', 'Beat Masters', 'happy', '🎉', '3:15', 'songs/party_time.mp3'),
-('Morning Peace', 'Zen Garden', 'calm', '🍃', '5:00', 'songs/morning_peace.mp3'),
-('Workout Mix', 'Fit Beats', 'energetic', '🏃', '3:40', 'songs/workout_mix.mp3'),
-('Heartbreak Blues', 'Emotion Express', 'sad', '💔', '4:15', 'songs/heartbreak_blues.mp3'),
-('Feel Good', 'Happy Souls', 'happy', '😊', '3:30', 'songs/feel_good.mp3'),
-('Meditation Flow', 'Inner Peace', 'calm', '🧘', '6:00', 'songs/meditation_flow.mp3'),
-('Adrenaline Rush', 'Extreme Sports', 'energetic', '🎸', '3:25', 'songs/adrenaline_rush.mp3');
