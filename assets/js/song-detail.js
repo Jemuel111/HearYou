@@ -23,18 +23,37 @@ async function loadSimilarSongs(emotion, currentSongId) {
 // Load demo similar songs
 function loadDemoSimilarSongs(emotion, currentSongId) {
     const allSongs = [
-        { id: 1, title: "Midnight Rain", artist: "Luna Echo", emotion: "sad", cover: "🌧️", duration: "3:45" },
-        { id: 2, title: "Summer Vibes", artist: "DJ Sunshine", emotion: "happy", cover: "☀️", duration: "3:20" },
-        { id: 3, title: "Deep Thoughts", artist: "Mind Wave", emotion: "calm", cover: "🌊", duration: "4:12" },
-        { id: 4, title: "Energy Burst", artist: "Power Pulse", emotion: "energetic", cover: "⚡", duration: "2:58" },
-        { id: 5, title: "Lonely Nights", artist: "Soul Singer", emotion: "sad", cover: "🌙", duration: "4:30" },
-        { id: 6, title: "Party Time", artist: "Beat Masters", emotion: "happy", cover: "🎉", duration: "3:15" },
-        { id: 7, title: "Morning Peace", artist: "Zen Garden", emotion: "calm", cover: "🍃", duration: "5:00" },
-        { id: 8, title: "Workout Mix", artist: "Fit Beats", emotion: "energetic", cover: "🏃", duration: "3:40" },
-        { id: 9, title: "Heartbreak Blues", artist: "Emotion Express", emotion: "sad", cover: "💔", duration: "4:15" },
-        { id: 10, title: "Feel Good", artist: "Happy Souls", emotion: "happy", cover: "😊", duration: "3:30" },
-        { id: 11, title: "Meditation Flow", artist: "Inner Peace", emotion: "calm", cover: "🧘", duration: "6:00" },
-        { id: 12, title: "Adrenaline Rush", artist: "Extreme Sports", emotion: "energetic", cover: "🎸", duration: "3:25" }
+        { id: 1, title: "Multo", artist: "Cup of Joe", emotion: "sad", cover: "👻", duration: "3:20" },
+        { id: 2, title: "Tibok", artist: "Earl Agustin", emotion: "energetic", cover: "❤️", duration: "2:58" },
+        { id: 3, title: "Marilag", artist: "Dionela", emotion: "happy", cover: "🌸", duration: "3:05" },
+        { id: 4, title: "Sa Bawat Sandali", artist: "Amiel Sol", emotion: "calm", cover: "🌅", duration: "3:45" },
+        { id: 5, title: "My Day", artist: "HELLMERRY", emotion: "energetic", cover: "🔥", duration: "3:10" },
+        { id: 6, title: "Isa Lang", artist: "Arthur Nery", emotion: "sad", cover: "💧", duration: "3:33" },
+        { id: 7, title: "Tingin", artist: "Cup of Joe & Janine", emotion: "happy", cover: "💖", duration: "3:15" },
+        { id: 8, title: "Saksi Ang Langit", artist: "December Avenue", emotion: "sad", cover: "🌧️", duration: "4:02" },
+        { id: 9, title: "Youll Be In My Heart", artist: "NIKI", emotion: "calm", cover: "💙", duration: "3:40" },
+        { id: 10, title: "Back to Friends", artist: "Sombr", emotion: "calm", cover: "🤍", duration: "3:25" },
+        { id: 11, title: "Palagi", artist: "TJ Monterde & KZ Tandingan", emotion: "happy", cover: "🌞", duration: "3:50" },
+        { id: 12, title: "Dilaw", artist: "Maki", emotion: "happy", cover: "🌼", duration: "3:22" },
+        { id: 13, title: "Blink Twice", artist: "BINI", emotion: "energetic", cover: "✨", duration: "2:50" },
+        { id: 14, title: "DAM", artist: "SB19", emotion: "energetic", cover: "⚡️", duration: "3:30" },
+        { id: 15, title: "Time", artist: "SB19", emotion: "calm", cover: "🕰️", duration: "3:45" },
+        { id: 16, title: "Dungka!", artist: "SB19", emotion: "energetic", cover: "🎶", duration: "3:35" },
+        { id: 17, title: "Karera", artist: "BINI", emotion: "energetic", cover: "🏁", duration: "3:10" },
+        { id: 18, title: "Pantropiko", artist: "BINI", emotion: "happy", cover: "🇵🇭", duration: "3:27" },
+        { id: 19, title: "Salamin, Salamin", artist: "BINI", emotion: "calm", cover: "🪞", duration: "3:45" },
+        { id: 20, title: "Sining", artist: "Dionela & Jay R", emotion: "sad", cover: "🎨", duration: "3:55" },
+        { id: 21, title: "Walang Alam", artist: "Hev Abi", emotion: "sad", cover: "😔", duration: "3:30" },
+        { id: 22, title: "Babaero", artist: "gins&melodies & Hev Abi", emotion: "sad", cover: "💔", duration: "3:40" },
+        { id: 23, title: "Makasarili Malambing", artist: "Kristina Dawn & Hev Abi", emotion: "sad", cover: "🌙", duration: "3:50" },
+        { id: 24, title: "Take All The Love", artist: "Arthur Nery", emotion: "calm", cover: "🤲", duration: "3:35" },
+        { id: 25, title: "You and I", artist: "Various Artists", emotion: "happy", cover: "💞", duration: "3:40" },
+        { id: 26, title: "Lets Go", artist: "Various Artists", emotion: "energetic", cover: "🚀", duration: "3:15" },
+        { id: 27, title: "Night Drive", artist: "Various Artists", emotion: "calm", cover: "🌙", duration: "4:00" },
+        { id: 28, title: "Sunrise", artist: "Various Artists", emotion: "happy", cover: "🌄", duration: "3:35" },
+        { id: 29, title: "Heartbeat", artist: "Various Artists", emotion: "energetic", cover: "💓", duration: "3:20" },
+        { id: 30, title: "Quiet Moments", artist: "Various Artists", emotion: "calm", cover: "🌿", duration: "4:10" }
+
     ];
     
     const similarSongs = allSongs
