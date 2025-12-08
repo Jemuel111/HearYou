@@ -1,31 +1,15 @@
 <?php
-// index.php - Main Entry Point
-
-// Enable error reporting for debugging (remove in production)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Start session
+// index.php - Main Entry Point with Enhanced Playlist Features
 session_start();
 
-// Check if required files exist
-if (!file_exists('config/database.php')) {
-    die('Error: config/database.php not found. Please check your file structure.');
-}
-
-if (!file_exists('includes/functions.php')) {
-    die('Error: includes/functions.php not found. Please check your file structure.');
-}
-
-// Include required files
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 
-// Initialize user session if not exists
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['user_id'] = uniqid('user_', true);
 }
+
+$isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +20,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/player.css">
     <link rel="stylesheet" href="assets/css/chat.css">
+    <link rel="stylesheet" href="assets/css/playlist.css">
 </head>
 <body>
     <!-- Header -->
@@ -47,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
             <h1>HearYou</h1>
         </div>
         <div class="header-actions">
-            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+            <?php if ($isLoggedIn): ?>
                 <div class="user-menu">
                     <button class="user-avatar" onclick="toggleUserMenu()">
                         <span><?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?></span>
@@ -175,12 +160,7 @@ if (!isset($_SESSION['user_id'])) {
                             <circle cx="11" cy="11" r="8" stroke-width="2"/>
                             <path d="m21 21-4.35-4.35" stroke-width="2"/>
                         </svg>
-                        <input 
-                            type="text" 
-                            id="searchInput" 
-                            placeholder="Search for songs, artists, or moods..." 
-                            autocomplete="off"
-                        />
+                        <input type="text" id="searchInput" placeholder="Search for songs, artists, or moods..." autocomplete="off" />
                     </div>
                 </div>
                 <div id="searchResultsHeader"></div>
@@ -192,7 +172,6 @@ if (!isset($_SESSION['user_id'])) {
                 <h2>Your Library</h2>
                 <p class="subtitle">Your music collection in one place</p>
 
-                <!-- Quick Stats -->
                 <div class="library-stats">
                     <div class="stat-box">
                         <div class="stat-number" id="totalSongsCount">0</div>
@@ -212,16 +191,13 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                <!-- Playlists Section -->
                 <div class="library-section">
                     <div class="section-header-flex">
                         <h3>Your Playlists</h3>
-                        <button class="btn-see-all" onclick="showAllPlaylists()">See All</button>
                     </div>
                     <div id="playlistsGrid" class="playlists-grid"></div>
                 </div>
 
-                <!-- Favorites Section -->
                 <div class="library-section">
                     <div class="section-header-flex">
                         <h3>Favorite Songs</h3>
@@ -230,7 +206,6 @@ if (!isset($_SESSION['user_id'])) {
                     <div id="favoritesList" class="library-grid"></div>
                 </div>
 
-                <!-- Recently Played -->
                 <div class="library-section">
                     <div class="section-header-flex">
                         <h3>Recently Played</h3>
@@ -239,7 +214,6 @@ if (!isset($_SESSION['user_id'])) {
                     <div id="recentlyPlayedList" class="library-grid"></div>
                 </div>
 
-                <!-- Most Played -->
                 <div class="library-section">
                     <div class="section-header-flex">
                         <h3>Most Played</h3>
@@ -247,6 +221,12 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                     <div id="mostPlayedList" class="library-grid"></div>
                 </div>
+            </div>
+
+            <!-- Playlist Detail View -->
+            <div id="playlistView" class="view">
+                <div id="playlistViewHeader"></div>
+                <div id="playlistViewSongs" class="song-list"></div>
             </div>
         </main>
 
@@ -331,51 +311,88 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </footer>
 
+    <!-- Playlist Modal -->
+    <div id="playlistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Create Playlist</h3>
+                <button class="modal-close" onclick="closePlaylistModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M18 6L6 18M6 6l12 12" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="playlistForm" class="modal-form">
+                <input type="hidden" id="playlistId">
+                <div class="form-group">
+                    <label for="playlistName">Playlist Name *</label>
+                    <input type="text" id="playlistName" required placeholder="My Awesome Playlist">
+                </div>
+                <div class="form-group">
+                    <label for="playlistDescription">Description</label>
+                    <textarea id="playlistDescription" placeholder="What's this playlist about?"></textarea>
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="playlistPublic">
+                    <span>Make this playlist public</span>
+                </label>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closePlaylistModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Save Playlist</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add to Playlist Modal -->
+    <div id="addToPlaylistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add to Playlist</h3>
+                <button class="modal-close" onclick="closeAddToPlaylistModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M18 6L6 18M6 6l12 12" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="playlist-selection-list" id="playlistSelectionList"></div>
+        </div>
+    </div>
+
+    <script>const isLoggedIn = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;</script>
     <script src="assets/js/app.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/player.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/chat.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/playlists.js?v=<?php echo time(); ?>"></script>
     <script>
-        // Toggle user dropdown menu
         function toggleUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.classList.toggle('show');
+            document.getElementById('userDropdown').classList.toggle('show');
         }
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const userMenu = document.querySelector('.user-menu');
             if (userMenu && !userMenu.contains(event.target)) {
                 const dropdown = document.getElementById('userDropdown');
-                if (dropdown) {
-                    dropdown.classList.remove('show');
-                }
+                if (dropdown) dropdown.classList.remove('show');
             }
         });
 
-        // Check if we should auto-play a song
         document.addEventListener('DOMContentLoaded', function() {
-            // Check URL parameter
             const urlParams = new URLSearchParams(window.location.search);
             const playSongId = urlParams.get('play');
             
             if (playSongId) {
-                // Wait for songs to load, then play
                 setTimeout(() => {
                     const song = allSongs.find(s => s.id == playSongId);
-                    if (song) {
-                        loadSongInPlayer(song);
-                    }
+                    if (song) loadSongInPlayer(song);
                 }, 1000);
             }
             
-            // Check sessionStorage for song to play
             const storedSong = sessionStorage.getItem('playSong');
             if (storedSong) {
                 try {
                     const song = JSON.parse(storedSong);
-                    setTimeout(() => {
-                        loadSongInPlayer(song);
-                    }, 500);
+                    setTimeout(() => loadSongInPlayer(song), 500);
                     sessionStorage.removeItem('playSong');
                 } catch (e) {
                     console.error('Error parsing stored song:', e);
@@ -383,13 +400,7 @@ if (!isset($_SESSION['user_id'])) {
             }
         });
 
-        // Debug: Log when scripts load
         console.log('%c🎵 HearYou App Loaded!', 'color: #9333ea; font-size: 16px; font-weight: bold;');
-        console.log('Functions available:', {
-            goToSongDetail: typeof goToSongDetail,
-            togglePlay: typeof togglePlay,
-            loadSongInPlayer: typeof loadSongInPlayer
-        });
     </script>
 </body>
 </html>
